@@ -107,9 +107,7 @@ class SortImports(object):
 
         self.output = "\n".join(self.out_lines)
         if check:
-            if self.output == file_contents:
-                print("SUCCESS: {0} Everything Looks Good!".format(self.file_path))
-            else:
+            if self.output != file_contents:
                 print("ERROR: {0} Imports are incorrectly sorted.".format(self.file_path), file=stderr)
                 self.incorrectly_sorted = True
             return
