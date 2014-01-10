@@ -38,7 +38,6 @@ from sys import path as PYTHONPATH
 from sys import stderr, stdout
 
 from natsort import natsorted
-from pies.overrides import *
 
 from . import settings
 
@@ -78,7 +77,7 @@ class SortImports(object):
                 self.file_path = file_path
                 with open(file_path) as file_to_import_sort:
                     file_contents = file_to_import_sort.read()
-                    file_contents = PY2 and file_contents.decode('utf8') or file_contents
+                    file_contents = file_contents.decode('utf8') or file_contents
 
         if file_contents is None or ("isort:" + "skip_file") in file_contents:
             return
@@ -108,9 +107,7 @@ class SortImports(object):
 
         self.output = "\n".join(self.out_lines)
         if check:
-            if self.output == file_contents:
-                print("SUCCESS: {0} Everything Looks Good!".format(self.file_path))
-            else:
+            if self.output != file_contents:
                 print("ERROR: {0} Imports are incorrectly sorted.".format(self.file_path), file=stderr)
                 self.incorrectly_sorted = True
             return
